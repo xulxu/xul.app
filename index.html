@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terminal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1012;
+      --fg: #0bb9e9;
+      --dim: #1e4edc;
+      --font: 'Press Start 2P', monospace;
+      --max-width: 120rem;
+      --cursor-width: 0.4rem;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font);
+    }
+    .viewport {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem;
+      box-sizing: border-box;
+    }
+    .terminal {
+      width: 100%;
+      max-width: var(--max-width);
+      line-height: 1;
+      white-space: pre-wrap;
+      word-break: break-word;
+      outline: none;
+      font-size: 0.75rem;
+    }
+    .titlebar {
+      color: var(--dim);
+      user-select: none;
+      margin-bottom: 0.75rem;
+      font-size: 1.5rem;
+    }
+    .cursor {
+      display: inline-block;
+      height: 1em;
+      width: var(--cursor-width);
+      background: var(--fg);
+      vertical-align: -0.2em;
+      margin-left: 1px;
+      animation: blink 1s steps(1, end) infinite;
+    }
+    .line {
+      display: block;
+      transform: translateY(0) scale(1);
+      transform-origin: left center;
+      opacity: 1;
+      font-size: 0.75rem;
+    }
+    .line.faded {
+      animation: settle 500ms forwards;
+    }
+    .user-in {
+      color: #dee600;
+    }
+    @keyframes blink {
+      50% { opacity: 0 }
+    }
+    @keyframes settle {
+      from { transform: translateY(0) scale(1); opacity: 1; easing: cubic-bezier(.17,.58,.39,1) }
+      to { transform: translateY(-1.5rem) scale(0.75); opacity: 0.7 }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cursor { animation-duration: 0.8s }
+      .line.faded { animation: none; opacity: 0.7; transform: translateY(-2.5rem) scale(0.98) }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="toplink" href="simple.html">[simple]</a>
+    <style>
+      .topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 0 2rem;
+        height: 2.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        pointer-events: none;
+        z-index: 10;
+      }
+      .toplink {
+        pointer-events: auto;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 400;
+        font-size: 0.75rem;
+        opacity: 0.9;
+      }
+    </style>
+  </header>
+  <main class="viewport">
+    <div class="terminal" role="textbox" aria-live="polite" aria-atomic="false" tabindex="0">
+      <div class="titlebar">andrew@portfolio — pseudo-terminal</div>
+      <div id="screen"></div>
+    </div>
+  </main>
+  <script>
+    const LINES = [
+      "...",
+      "Connecting to andrew@portfolio . . .",
+      "Connected",
+      "The time is " + new Date().toLocaleTimeString(),
+      "andrew@portfolio:~$ echo \"hello, world\"",
+      "hello, world",
+      ""
+    ];
+    const TYPE_DELAY = 22;
+    const DOT_PAUSE = 750;
+    const LINE_PAUSE = 200;
+    const PROMPT = "andrew@portfolio:~$ ";
+    const screenEl = document.getElementById("screen");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let inputActive = false;
+    let currentInput = "";
+    let history = [];
+    let historyIndex = -1;
+
+    function escapeHTML(s) {
+      return s.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+    }
+
+    function scrollToBottom() {
+      const container = document.querySelector(".terminal");
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function typeText(el, text, delay) {
+      return new Promise(resolve => {
+        let i = 0;
+        function step() {
+          if (i >= text.length) { resolve(); return; }
+          el.innerHTML += escapeHTML(text.charAt(i));
+          i++;
+          scrollToBottom();
+          setTimeout(step, text.charAt(i - 1) === "." ? DOT_PAUSE : delay);
+        }
+        step();
+      });
+    }
+
+    async function typeLine(text) {
+      const span = document.createElement("span");
+      span.className = "line";
+      screenEl.appendChild(span);
+      await typeText(span, text, TYPE_DELAY);
+      screenEl.appendChild(document.createElement("br"));
+      void span.offsetWidth;
+      span.classList.add("faded");
+      await new Promise(r => setTimeout(r, LINE_PAUSE));
+    }
+
+    async function bootSequence() {
+      if (prefersReducedMotion) {
+        for (const t of LINES) {
+          const s = document.createElement("span");
+          s.className = "line faded";
+          s.textContent = t;
+          screenEl.appendChild(s);
+          screenEl.appendChild(document.createElement("br"));
+        }
+        startInputMode();
+        return;
+      }
+      for (const t of LINES) {
+        await typeLine(t);
+      }
+      startInputMode();
+    }
+
+    function startInputMode() {
+      inputActive = true;
+      ensurePromptLine();
+      document.querySelector(".terminal").focus();
+    }
+
+    function ensurePromptLine() {
+      if (document.getElementById("live-line")) return;
+      const live = document.createElement("span");
+      live.id = "live-line";
+      const prompt = document.createElement("span");
+      prompt.className = "prompt";
+      prompt.textContent = PROMPT;
+      const input = document.createElement("span");
+      input.id = "input-text";
+      input.className = "user-in";
+      const cursor = document.createElement("span");
+      cursor.className = "cursor";
+      cursor.setAttribute("aria-hidden", "true");
+      live.appendChild(prompt);
+      live.appendChild(input);
+      live.appendChild(cursor);
+      screenEl.appendChild(live);
+      scrollToBottom();
+    }
+
+    function renderInput() {
+      const inputSpan = document.getElementById("input-text");
+      if (!inputSpan) return;
+      inputSpan.textContent = currentInput;
+      scrollToBottom();
+    }
+
+    function finalizeUserLine() {
+      const live = document.getElementById("live-line");
+      if (!live) return null;
+      const line = document.createElement("span");
+      line.className = "line";
+      line.textContent = PROMPT + currentInput;
+      live.remove();
+      screenEl.appendChild(line);
+      screenEl.appendChild(document.createElement("br"));
+      void line.offsetWidth;
+      line.classList.add("faded");
+      return line;
+    }
+
+    async function printOutputs(lines) {
+      for (const l of lines) {
+        await typeLine(l);
+      }
+    }
+
+    function processCommand(cmd) {
+      const t = cmd.trim();
+      const lc = t.toLowerCase();
+      if (!t) return { out: [], done: true };
+      if (lc === "help") return { out: ["commands:", "  help      - show this help", "  whoami    - print user", "  clear     - clear the screen", "  echo ...  - print text"], done: true };
+      if (lc === "whoami") return { out: ["andrew"], done: true };
+      if (lc === "clear") return { out: null, clear: true, done: true };
+      if (lc.startsWith("echo ")) return { out: [t.slice(5)], done: true };
+      return { out: [`command not found: ${t}`], done: true };
+    }
+
+    document.addEventListener("keydown", async e => {
+      if (!inputActive) return;
+      if (e.key === "Tab") { e.preventDefault(); return; }
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const cmd = currentInput;
+        history.unshift(cmd);
+        historyIndex = -1;
+        finalizeUserLine();
+        const res = processCommand(cmd);
+        if (res && res.clear) {
+          screenEl.innerHTML = "";
+        } else if (res && res.out) {
+          await printOutputs(res.out);
+        }
+        currentInput = "";
+        ensurePromptLine();
+        return;
+      }
+      if (e.key === "Backspace") {
+        e.preventDefault();
+        if (currentInput.length > 0) {
+          currentInput = currentInput.slice(0, -1);
+          renderInput();
+        }
+        return;
+      }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (history.length) {
+          historyIndex = Math.min(historyIndex + 1, history.length - 1);
+          currentInput = history[historyIndex];
+          renderInput();
+        }
+        return;
+      }
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (history.length) {
+          historyIndex = Math.max(historyIndex - 1, -1);
+          currentInput = historyIndex === -1 ? "" : history[historyIndex];
+          renderInput();
+        }
+        return;
+      }
+      if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        currentInput += e.key;
+        renderInput();
+      }
+    });
+
+    (function setupToplinkAnimation() {
+      const menuBar = document.querySelector('.toplink');
+      if (!menuBar) return;
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      const duration = 400;
+      const anim = menuBar.animate(
+        [
+          { transform: 'scale(1)', opacity: 0.9, offset: 0, easing: 'cubic-bezier(.17,.58,.39,1)' },
+          { transform: 'scale(0.9)', opacity: 0.7, offset: 1, easing: 'cubic-bezier(.17,.58,.39,1)' }
+        ],
+        { duration, fill: 'both' }
+      );
+      anim.pause();
+
+      menuBar.addEventListener('mouseenter', () => {
+        anim.playbackRate = 1;
+        anim.play();
+      });
+      menuBar.addEventListener('mouseleave', () => {
+        anim.playbackRate = -1;
+        anim.play();
+      });
+    })();
+
+    bootSequence();
+  </script>
+</body>
+</html>
