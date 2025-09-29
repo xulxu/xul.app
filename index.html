@@ -1,3 +1,4 @@
+<!--References: W3 schools, MDN (Mozilla) HTML base adapted from a close friend (Silas) with permission-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +14,10 @@
       --font: 'Press Start 2P', monospace;
       --max-width: 120rem;
       --cursor-width: 0.4rem;
+      --fade-up: 1.5rem;
+    }
+    #screen {
+      padding-top: var(--fade-up);
     }
     html, body {
       height: 100%;
@@ -27,13 +32,14 @@
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding: 2rem;
+      padding: 3rem;
       box-sizing: border-box;
     }
     .terminal {
       width: 100%;
+      height: 100%;
       max-width: var(--max-width);
-      line-height: 1;
+      line-height: 0.5;
       white-space: pre-wrap;
       word-break: break-word;
       outline: none;
@@ -42,7 +48,7 @@
     .titlebar {
       color: var(--dim);
       user-select: none;
-      margin-bottom: 0.75rem;
+      margin-bottom: 1rem;
       font-size: 1.5rem;
     }
     .cursor {
@@ -60,6 +66,7 @@
       transform-origin: left center;
       opacity: 1;
       font-size: 0.75rem;
+      margin-bottom: 0.1rem;
     }
     .line.faded {
       animation: settle 500ms forwards;
@@ -72,7 +79,7 @@
     }
     @keyframes settle {
       from { transform: translateY(0) scale(1); opacity: 1; easing: cubic-bezier(.17,.58,.39,1) }
-      to { transform: translateY(-1.5rem) scale(0.75); opacity: 0.7 }
+      to { transform: translateY(calc(-1.5 * var(--fade-up))) scale(0.75); opacity: 0.7 }
     }
     @media (prefers-reduced-motion: reduce) {
       .cursor { animation-duration: 0.8s }
@@ -82,7 +89,7 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="toplink" href="simple.html">[simple]</a>
+    <a class="toplink" href="/portfolio">[portfolio]</a>
     <style>
       .topbar {
         position: fixed;
@@ -109,24 +116,23 @@
   </header>
   <main class="viewport">
     <div class="terminal" role="textbox" aria-live="polite" aria-atomic="false" tabindex="0">
-      <div class="titlebar">andrew@portfolio — pseudo-terminal</div>
+      <div class="titlebar">user@xul.app</div>
       <div id="screen"></div>
     </div>
   </main>
   <script>
     const LINES = [
       "...",
-      "Connecting to andrew@portfolio . . .",
-      "Connected",
+      "Connecting to xul.app . . .",
+      "Connected!",
       "The time is " + new Date().toLocaleTimeString(),
-      "andrew@portfolio:~$ echo \"hello, world\"",
-      "hello, world",
+      "user@xul.app:~$ \"hello! type 'help' to see available commands\"",
       ""
     ];
     const TYPE_DELAY = 22;
     const DOT_PAUSE = 750;
     const LINE_PAUSE = 200;
-    const PROMPT = "andrew@portfolio:~$ ";
+    const PROMPT = "user@xul.app:~$ ";
     const screenEl = document.getElementById("screen");
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let inputActive = false;
@@ -134,6 +140,7 @@
     let history = [];
     let historyIndex = -1;
 
+    // stop HTML injection (thanks silas)
     function escapeHTML(s) {
       return s.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
     }
@@ -143,6 +150,7 @@
       container.scrollTop = container.scrollHeight;
     }
 
+    // type with delay, longer on period
     function typeText(el, text, delay) {
       return new Promise(resolve => {
         let i = 0;
@@ -157,6 +165,7 @@
       });
     }
 
+    // type out, then await
     async function typeLine(text) {
       const span = document.createElement("span");
       span.className = "line";
@@ -168,6 +177,7 @@
       await new Promise(r => setTimeout(r, LINE_PAUSE));
     }
 
+    // check user's accessbility, remove all anims. otherwise normal
     async function bootSequence() {
       if (prefersReducedMotion) {
         for (const t of LINES) {
@@ -186,12 +196,14 @@
       startInputMode();
     }
 
+    // init input/typing
     function startInputMode() {
       inputActive = true;
       ensurePromptLine();
       document.querySelector(".terminal").focus();
     }
 
+    // make input/prompt line
     function ensurePromptLine() {
       if (document.getElementById("live-line")) return;
       const live = document.createElement("span");
@@ -212,6 +224,7 @@
       scrollToBottom();
     }
 
+    // print text input, keep line below
     function renderInput() {
       const inputSpan = document.getElementById("input-text");
       if (!inputSpan) return;
@@ -219,6 +232,7 @@
       scrollToBottom();
     }
 
+    // turn line to history, then anims
     function finalizeUserLine() {
       const live = document.getElementById("live-line");
       if (!live) return null;
@@ -239,17 +253,23 @@
       }
     }
 
+    // typing processing
     function processCommand(cmd) {
       const t = cmd.trim();
       const lc = t.toLowerCase();
       if (!t) return { out: [], done: true };
-      if (lc === "help") return { out: ["commands:", "  help      - show this help", "  whoami    - print user", "  clear     - clear the screen", "  echo ...  - print text"], done: true };
-      if (lc === "whoami") return { out: ["andrew"], done: true };
+      if (lc === "help") return { out: ["commands:", "  whoami    - print user", "  clear     - clear the screen", "  portfolio - view my portfolio", "  echo ...  - print text"], done: true };
+      if (lc === "whoami") return { out: ["Andrew Xu"], done: true };
       if (lc === "clear") return { out: null, clear: true, done: true };
+      if (lc === "portfolio") {
+        window.location.href = "/portfolio";
+        return { out: [], done: true };
+      }
       if (lc.startsWith("echo ")) return { out: [t.slice(5)], done: true };
       return { out: [`command not found: ${t}`], done: true };
     }
 
+    // input and typing
     document.addEventListener("keydown", async e => {
       if (!inputActive) return;
       if (e.key === "Tab") { e.preventDefault(); return; }
@@ -301,32 +321,36 @@
       }
     });
 
+    // anims and keyframes, WAAPI
     (function setupToplinkAnimation() {
-      const menuBar = document.querySelector('.toplink');
-      if (!menuBar) return;
+      const targets = document.querySelectorAll('.toplink');
+      if (!targets.length) return;
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReduced) return;
 
       const duration = 400;
-      const anim = menuBar.animate(
-        [
+      const keyframes = [
           { transform: 'scale(1)', opacity: 0.9, offset: 0, easing: 'cubic-bezier(.17,.58,.39,1)' },
           { transform: 'scale(0.9)', opacity: 0.7, offset: 1, easing: 'cubic-bezier(.17,.58,.39,1)' }
-        ],
-        { duration, fill: 'both' }
-      );
-      anim.pause();
+        ];
+      const timing = { duration, fill: 'both' };
 
-      menuBar.addEventListener('mouseenter', () => {
-        anim.playbackRate = 1;
-        anim.play();
-      });
-      menuBar.addEventListener('mouseleave', () => {
-        anim.playbackRate = -1;
-        anim.play();
+      targets.forEach(el => {
+        const anim = el.animate(keyframes, timing);
+        anim.pause();
+        anim.currentTime = 0;
+
+        el.addEventListener('mouseenter', () => {
+          anim.playbackRate = 1;
+          anim.play();
+        });
+
+        el.addEventListener('mouseleave', () => {
+          anim.playbackRate = -1;
+          anim.play();
+        });
       });
     })();
-
     bootSequence();
   </script>
 </body>

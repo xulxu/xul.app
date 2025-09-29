@@ -1,0 +1,377 @@
+<!--References: W3 schools, MDN (Mozilla) HTML base adapted from a close friend (Silas) with permission-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Andrew Xu Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1012;
+      --fg: #0bb9e9;
+      --text: #e6ecef;
+      --muted: #b5c0c5;
+      --card: rgba(255, 255, 255, 0.03);
+      --stroke: rgba(255, 255, 255, 0.08);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      --radius: 12px;
+      --pad: 1.1rem;
+      --gap: 1.2rem;
+      --max: 1100px;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Press Start 2P', monospace;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+    a:hover {
+      opacity: 0.9;
+    }
+    .wrap {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1.25rem 3rem;
+      box-sizing: border-box;
+    }
+    header {
+      width: 100%;
+      max-width: var(--max);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .brand {
+      color: var(--fg);
+      font-size: 1.5rem;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+    .links {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .link {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.7rem;
+      opacity: 0.9;
+      padding: 0.35rem 0.55rem;
+      border: 1px solid var(--stroke);
+      border-radius: 8px;
+      background: var(--card);
+    }
+    main {
+      width: 100%;
+      max-width: var(--max);
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--gap);
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: var(--pad);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .title {
+      color: var(--fg);
+      font-size: 1rem;
+      line-height: 1.1;
+      letter-spacing: 0.6px;
+      margin: 0 0 0.2rem 0;
+    }
+    .body {
+      font-size: 0.75rem;
+      line-height: 1.45;
+      color: var(--text);
+    }
+    .muted {
+      color: var(--muted);
+      font-size: 0.6rem;
+      line-height: 1.2rem;
+    }
+    .list {
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+    .list li {
+      margin: 0.35rem 0;
+    }
+    .tags {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 0.63rem;
+      color: #0b0f0c;
+      background: var(--text);
+      padding: 0.2rem 0.45rem;
+      border-radius: 7px;
+    }
+    .span-12 {
+      grid-column: span 12;
+    }
+    .span-8 {
+      grid-column: span 8;
+    }
+    .span-6 {
+      grid-column: span 6;
+    }
+    .span-4 {
+      grid-column: span 4;
+    }
+    .span-3 {
+      grid-column: span 3;
+    }
+    @media (max-width: 980px) {
+      .span-8, .span-6 {
+        grid-column: span 12;
+      }
+      .span-4, .span-3 {
+        grid-column: span 6;
+      }
+    }
+    @media (max-width: 640px) {
+      main {
+        gap: 0.9rem;
+      }
+      .span-4, .span-3 {
+        grid-column: span 12;
+      }
+      .brand {
+        font-size: 0.9rem;
+      }
+      .title {
+        font-size: 0.78rem;
+      }
+      .body {
+        font-size: 0.73rem;
+      }
+    }
+    .title + .rule {
+      height: 1px;
+      background: var(--stroke);
+      border: none;
+    }
+    .link, .toplink {
+      display: inline-block;
+      opacity: 0.7;
+      transform: scale(1);
+      will-change: transform, opacity;
+    }
+    .link:hover, .toplink:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">Andrew&nbsp;Xu — Portfolio</div>
+      <nav class="links">
+        <a class="link" href="/" aria-label="Home">[home]</a>
+        <a class="link" href="https://www.linkedin.com/in/xulxu" target="_blank" rel="noopener">[linkedin]</a>
+        <a class="link" href="https://github.com/xulxu" target="_blank" rel="noopener">[github]</a>
+        <a class="link" href="/assets/Andrew-Xu-CV.docx" target="_blank" rel="noopener">[download&nbsp;cv]</a>
+      </nav>
+    </header>
+    <main>
+      <section class="card span-8" aria-labelledby="title-profile">
+        <h2 id="title-profile" class="title">Profile</h2>
+        <hr class="rule">
+        <div class="body">
+            3rd year Computer Science student (Data Science &amp; AI) at UCD with strong foundations in Java, C, and Python. 
+            Experienced in software development and collaborative projects, with a strong focus on producing clean, functional code. 
+            Proven adaptability balancing part-time work with study. 
+            Actively seeking an internship opportunity to apply technical skills, contribute to real-world projects, and further develop professional and collaborative abilities.
+        </div>
+        <div class="muted">Location: Newbridge, Co.Kildare | Co. Dublin</div>
+      </section>
+      <section class="card span-4" aria-labelledby="title-skills">
+        <h2 id="title-skills" class="title">Skills</h2>
+        <hr class="rule">
+        <div class="body">
+          <div class="muted">Languages (Proficient)</div>
+          <div class="tags">
+            <span class="tag">Java</span>
+            <span class="tag">C</span>
+            <span class="tag">Python</span>
+            <span class="tag">SQL</span>
+          </div>
+        </div>
+        <div class="body">
+          <div class="muted">Languages (Familiar)</div>
+          <div class="tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Haskell</span>
+            <span class="tag">Racket</span>
+            <span class="tag">Assembly</span>
+          </div>
+        </div>
+        <div class="body">
+          <div class="muted">Software</div>
+          <div class="tags">
+            <span class="tag">GitHub</span>
+            <span class="tag">GitLab</span>
+            <span class="tag">IntelliJ</span>
+            <span class="tag">VSC</span>
+            <span class="tag">CLion</span>
+            <span class="tag">Google Suite</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">Microsoft Office</span>
+          </div>
+        </div>
+      </section>
+      <section class="card span-12" aria-labelledby="title-projects">
+        <h2 id="title-projects" class="title">Projects</h2>
+        <hr class="rule">
+        <article class="body">
+          <strong>HexOust — Java Board Game</strong> • Java, JavaFX
+          <ul class="list">
+            <li>Team of 3, implemented hex-grid rendering logic, added letterboxing and scaling for adapting to varying resolutions.</li>
+            <li>Made additional visual features with JavaFX, optimized certain player conditions.</li>
+          </ul>
+          <div class="muted"><a href="https://github.com/xulxu/HexOust-Boardgame" target="_blank" rel="noopener">Repo link</a></div>
+        </article>
+        <br>
+        <article class="body">
+          <strong>Time Complexity vs Energy Consumption</strong> • Java, Python
+          <ul class="list">
+            <li>Benchmarked sorting algorithms and data structures, measured time and memory, graphed results with Python.</li>
+            <li>Measured energy using software that monitors hardware sensors, analysed correlations between energy and performance.</li>
+            <li>Wrote a detailed technical report analyzing unexpected findings or proven hypotheses.</li>
+            <li>Project meant for 4 but due to circumstances, worked solo and adapted to the setback.</li>
+          </ul>
+          <div class="muted"><a href="https://github.com/xulxu/group12-algorithms" target="_blank" rel="noopener">Repo link</a></div>
+        </article>
+        <br>
+        <article class="body">
+            <strong>Terminal Gantt Chart w/ Dependencies Implementation</strong> • C
+            <ul class="list">
+              <li>Implemented a terminal-based Gantt chart that visualizes project timelines and dependencies.</li>
+              <li>Worked alongside a teammate and communicated plans frequently on discord.</li>
+              <li>Made sophisticated methods of padding for visuals and dynamic layouts.</li>
+            </ul>
+            <div class="muted"><a href="https://github.com/xulxu/by-assignment-2" target="_blank" rel="noopener">Repo link</a></div>
+          </article>
+      </section>
+      <section class="card span-6" aria-labelledby="title-edu">
+        <h2 id="title-edu" class="title">Education</h2>
+        <hr class="rule">
+        <div class="body">
+          <strong>University College Dublin (BSc)</strong><br>Computer Science with Data Science &amp; AI<br>
+          <div class="muted">Sep 2022 - Present | 2nd-Year GPA: 3.53</div>
+
+          <ul class="list">
+            <li><strong>A</strong>: Software Engineering Project 2, Functional Programming 2, Object-Oriented Programming</li>
+            <li><strong>A-</strong>: Discrete Mathematics, Linear Algebra 2</li>
+            <li><strong>B+ / B</strong>: Digital Systems, Databases and Information Systems 1, Algorithms</li>
+          </ul>
+        </div>
+      </section>
+      <section class="card span-6" aria-labelledby="title-exp">
+        <h2 id="title-exp" class="title">Experience</h2>
+        <hr class="rule">
+        <div class="body">
+          <strong>Domino's Supply Chain Centre</strong>
+          <div class="muted">Production Assistant | Jul 2022 - Present</div>
+          <ul class="list">
+            <li>Collaborated in a fast-paced environment to meet targets while following safety and quality standards.</li>
+            <li>Maintained accurate production logs, adapted to rotating roles, able to problem solve during very demanding days.</li>
+          </ul>
+        </div>
+      </section>
+      <section class="card span-6" aria-labelledby="title-ach">
+        <h2 id="title-ach" class="title">Interest</h2>
+        <hr class="rule">
+        <div class="body">
+          <ul class="list">
+            <li>Computer Hardware</li>
+            <li>Graphic Design</li>
+            <li>Video Games</li>
+          </ul>
+        </div>
+      </section>
+      <section class="card span-6" aria-labelledby="title-contact">
+        <h2 id="title-contact" class="title">Contact</h2>
+        <hr class="rule">
+        <div class="body">
+          <div>Email: <br><a href="mailto:evening@outlook.ie">evening@outlook.ie</a> (Work)</div>
+          <div><a href="mailto:metal@outlook.ie">metal@outlook.ie</a> (Personal)</div><br>
+          <div>Phone: <br>0892189722 (Work)<br>0871209299 (Personal)</div><br>
+          <div>Platforms: <br><a href="https://www.linkedin.com/in/xulxu" target="_blank" rel="noopener">LinkedIn</a>
+            <br>Discord (4.x)</div>
+        </div>
+        <div class="muted">Prefer email, linkedin &amp; text for work &amp; school.
+            <br>For anything else, reach out via discord or phone!</div>
+      </section>
+    </main>
+  </div>
+  <script>
+    // WAAPI (thank you mozilla (MDN))
+    (function setupToplinkAnimation() {
+      const targets = document.querySelectorAll('.link, .toplink');
+      if (!targets.length) return;
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      // animations params. (bezier made with cubic-bezier.com)
+      const duration = 400;
+      const keyframes = [
+        { transform: 'scale(1)', opacity: 0.9, boxShadow: '0 0 0 0px rgba(255,255,255,0.06) inset', offset: 0, easing: 'cubic-bezier(.17,.58,.39,1)' },
+        { transform: 'scale(0.9)', opacity: 0.7, boxShadow: '0 0 0 2px rgba(255,255,255,0.06) inset', offset: 1, easing: 'cubic-bezier(.17,.58,.39,1)' }
+      ];
+      const timing = { duration, fill: 'both' };
+    
+      // init anims, keyframes
+      targets.forEach(el => {
+        const anim = el.animate(keyframes, timing);
+        anim.pause();
+        anim.currentTime = 0;
+
+        el.addEventListener('mouseenter', () => {
+          anim.playbackRate = 1;
+          anim.play();
+        });
+
+        el.addEventListener('mouseleave', () => {
+          anim.playbackRate = -1;
+          anim.play();
+        });
+
+        el.addEventListener('focus', () => {
+          anim.playbackRate = 1;
+          anim.play();
+        });
+
+        el.addEventListener('blur', () => {
+          anim.playbackRate = -1;
+          anim.play();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
