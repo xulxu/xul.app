@@ -131,7 +131,7 @@
     ];
     const TYPE_DELAY = 22;
     const DOT_PAUSE = 750;
-    const LINE_PAUSE = 200;
+    const LINE_PAUSE = 300;
     const PROMPT = "user@xul.app:~$ ";
     const screenEl = document.getElementById("screen");
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -151,7 +151,7 @@
     }
 
     // type with delay, longer on period
-    function typeText(el, text, delay) {
+    function typeText(el, text, delay, flag) {
       return new Promise(resolve => {
         let i = 0;
         function step() {
@@ -159,18 +159,18 @@
           el.innerHTML += escapeHTML(text.charAt(i));
           i++;
           scrollToBottom();
-          setTimeout(step, text.charAt(i - 1) === "." ? DOT_PAUSE : delay);
+          setTimeout(step, (flag && text.charAt(i - 1) === ".") ? DOT_PAUSE : delay);
         }
         step();
       });
     }
 
     // type out, then await
-    async function typeLine(text) {
+    async function typeLine(text, initDots = false) {
       const span = document.createElement("span");
       span.className = "line";
       screenEl.appendChild(span);
-      await typeText(span, text, TYPE_DELAY);
+      await typeText(span, text, TYPE_DELAY, initDots);
       screenEl.appendChild(document.createElement("br"));
       void span.offsetWidth;
       span.classList.add("faded");
@@ -190,8 +190,8 @@
         startInputMode();
         return;
       }
-      for (const t of LINES) {
-        await typeLine(t);
+      for (let i = 0; i < LINES.length; i++) {
+        await typeLine(LINES[i], i < 2);
       }
       startInputMode();
     }
