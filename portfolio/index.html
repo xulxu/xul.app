@@ -11,7 +11,9 @@
       --bg: #0d1012;
       --fg: #0bb9e9;
       --text: #e6ecef;
-      --muted: #b5c0c5;
+      --muted: #a7b4b9;
+      --heading: #5ab2df;
+      --accent: #e7dd49;
       --card: rgba(255, 255, 255, 0.03);
       --stroke: rgba(255, 255, 255, 0.08);
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
@@ -98,6 +100,26 @@
       line-height: 1.1;
       letter-spacing: 0.6px;
       margin: 0 0 0.2rem 0;
+    }
+    .heading {
+      color: var(--heading);
+    }
+    .heading-sub {
+      color: var(--accent);
+      font-weight: normal;
+    }
+    .heading-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .right-splash {
+      color: var(--muted);
+      text-align: right;
+    }
+    .left-splash {
+      display: flex;
+      gap: 1em;
     }
     .body {
       font-size: 0.75rem;
@@ -192,12 +214,12 @@
 <body>
   <div class="wrap">
     <header>
-      <div class="brand">Andrew&nbsp;Xu — Portfolio</div>
+      <div class="brand">Andrew Xu - Portfolio</div>
       <nav class="links">
         <a class="link" href="/" aria-label="Home">[home]</a>
         <a class="link" href="https://www.linkedin.com/in/xulxu" target="_blank" rel="noopener">[linkedin]</a>
         <a class="link" href="https://github.com/xulxu" target="_blank" rel="noopener">[github]</a>
-        <a class="link" href="/assets/Andrew-Xu-CV.docx" target="_blank" rel="noopener">[download&nbsp;cv]</a>
+        <a class="link" href="/assets/Andrew-Xu-CV.docx" target="_blank" rel="noopener">[download cv]</a>
       </nav>
     </header>
     <main>
@@ -253,7 +275,13 @@
         <h2 id="title-projects" class="title">Projects</h2>
         <hr class="rule">
         <article class="body">
-          <strong>HexOust — Java Board Game</strong> • Java, JavaFX
+          <div class="heading-wrap">
+            <div class="left-splash">
+              <strong class="heading">HexOust — Java Board Game</strong>
+              <span class="heading-sub">• Java, JavaFX</span>
+            </div>
+          <span class="right-splash">Jan 2025 | Apr 2025</span>
+          </div>
           <ul class="list">
             <li>Team of 3, implemented hex-grid rendering logic, added letterboxing and scaling for adapting to varying resolutions.</li>
             <li>Made additional visual features with JavaFX, optimized certain player conditions.</li>
@@ -262,7 +290,13 @@
         </article>
         <br>
         <article class="body">
-          <strong>Time Complexity vs Energy Consumption</strong> • Java, Python
+          <div class="heading-wrap">
+            <div class="left-splash">
+              <strong class="heading">Time Complexity vs Energy Consumption</strong>
+              <span class="heading-sub">• Java, Python</span>
+            </div>
+            <span class="right-splash">Jan 2025 | Apr 2025</span>
+          </div>
           <ul class="list">
             <li>Benchmarked sorting algorithms and data structures, measured time and memory, graphed results with Python.</li>
             <li>Measured energy using software that monitors hardware sensors, analysed correlations between energy and performance.</li>
@@ -273,13 +307,19 @@
         </article>
         <br>
         <article class="body">
-            <strong>Terminal Gantt Chart w/ Dependencies Implementation</strong> • C
-            <ul class="list">
-              <li>Implemented a terminal-based Gantt chart that visualizes project timelines and dependencies.</li>
-              <li>Worked alongside a teammate and communicated plans frequently on discord.</li>
-              <li>Made sophisticated methods of padding for visuals and dynamic layouts.</li>
-            </ul>
-            <div class="muted"><a href="https://github.com/xulxu/by-assignment-2" target="_blank" rel="noopener">Repo link</a></div>
+          <div class="heading-wrap">
+            <div class="left-splash">
+              <strong class="heading">Terminal Gantt Chart with Dependencies Implementation</strong>
+              <span class="heading-sub">• C</span>
+            </div>
+            <span class="right-splash">Mar 2023 | Apr 2023</span>
+          </div>
+          <ul class="list">
+            <li>Implemented a terminal-based Gantt chart that visualizes project timelines and dependencies.</li>
+            <li>Worked alongside a teammate and communicated plans frequently on Discord.</li>
+            <li>Developed sophisticated methods of padding for visuals and dynamic layouts.</li>
+          </ul>
+          <div class="muted"><a href="https://github.com/xulxu/by-assignment-2" target="_blank" rel="noopener">Repo link</a></div>
           </article>
       </section>
       <section class="card span-6" aria-labelledby="title-edu">
@@ -305,6 +345,7 @@
           <ul class="list">
             <li>Collaborated in a fast-paced environment to meet targets while following safety and quality standards.</li>
             <li>Maintained accurate production logs, adapted to rotating roles, able to problem solve during very demanding days.</li>
+            <li>Balanced both work and study simultaneously despite long shifts, proving adaptability and reliability.</li>
           </ul>
         </div>
       </section>
@@ -324,17 +365,17 @@
           <strong>Graphic Design</strong>
           <ul class="list-condensed">
             <li>Extremely fascinated over the limits people can push when it comes to web design and graphic design.
-              Occasionally mess around with Photoshop and After Effects to make animated gif banners.
-              Interested in three.JS for it's 3D capabilities on the web.
+              Occasionally mess around with Photoshop and After Effects to make animated GIF banners.
+              Interested in Three.js for its 3D capabilities on the web.
             </li>
           </ul>
         </article>
         <article class="body">
           <strong>Video Games</strong>
           <ul class="list-condensed">
-            <li>Unsurprisingly, ties itself with computer hardware.
-              Long time competitive gamer (CSGO/CS2) and used to parttake in LUA scripting but not too extensively.
-              Enjoy playing games but also interested in how 3rd party cheating software works on a technical level.
+            <li>Enjoy gaming as a hobby but also fascinated over the more technical side such as datamining, modding and reverse engineering.
+              Long-time competitive gamer (CSGO/CS2) and used to partake in LUA scripting but not too extensively.
+              Interested in learning IDA and Ghidra some day.
             </li>
           </ul>
         </article>
@@ -350,7 +391,7 @@
             <br>Discord (4.x)</div>
         </div>
         <div class="muted">Prefer email, linkedin &amp; text for work &amp; school.
-            <br>For anything else, reach out via discord or phone!</div>
+            <br>For any other purpose, feel free to contact through personal contacts.</div>
       </section>
     </main>
   </div>
