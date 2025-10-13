@@ -5,29 +5,33 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Andrew Xu Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0d1012;
       --fg: #0bb9e9;
       --text: #e6ecef;
-      --muted: #a7b4b9;
+      --muted: #bacbd2;
       --heading: #5ab2df;
       --accent: #e7dd49;
       --card: rgba(255, 255, 255, 0.03);
       --stroke: rgba(255, 255, 255, 0.08);
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
       --radius: 12px;
-      --pad: 1.1rem;
-      --gap: 1.2rem;
-      --max: 1100px;
+      --pad: 1.2rem;
+      --gap: 1.3rem;
+      --max: 1300px;
     }
     html, body {
       height: 100%;
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      font-family: 'Press Start 2P', monospace;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 18px;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -54,23 +58,24 @@
       justify-content: space-between;
       gap: 1rem;
       margin-bottom: 1.25rem;
+      font-size: 1.5rem;
     }
     .brand {
       color: var(--fg);
-      font-size: 1.5rem;
+      font-size: 2rem;
       letter-spacing: 0.5px;
       line-height: 1.2;
     }
     .links {
       display: flex;
-      gap: 0.9rem;
+      gap: 1.3rem;
       flex-wrap: wrap;
       align-items: center;
     }
     .link {
       color: #fff;
       text-decoration: none;
-      font-size: 0.7rem;
+      font-size: 1rem;
       opacity: 0.9;
       padding: 0.35rem 0.55rem;
       border: 1px solid var(--stroke);
@@ -92,21 +97,23 @@
       padding: var(--pad);
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 1rem;
     }
     .title {
       color: var(--fg);
-      font-size: 1rem;
-      line-height: 1.1;
+      font-size: 1.5rem;
+      line-height: 1;
       letter-spacing: 0.6px;
       margin: 0 0 0.2rem 0;
     }
     .heading {
       color: var(--heading);
+      font-size: 1.2rem;
     }
     .heading-sub {
       color: var(--accent);
-      font-weight: normal;
+      font-weight: bold;
+      font-size: 1.2rem;
     }
     .heading-wrap {
       display: flex;
@@ -114,31 +121,33 @@
       align-items: baseline;
     }
     .right-splash {
-      color: var(--muted);
+      color: var(--accent);
       text-align: right;
     }
     .left-splash {
+      color: var(--accent);
       display: flex;
       gap: 1em;
     }
     .body {
-      font-size: 0.75rem;
+      font-size: 1.2rem;
       line-height: 1.45;
       color: var(--text);
     }
     .muted {
       color: var(--muted);
-      font-size: 0.6rem;
+      font-size: 1rem;
       line-height: 1.2rem;
     }
     .list {
       margin: 0;
+      font-size: 1rem;
       padding-left: 1.1rem;
     }
     .list-condensed {
       margin: 0;
       padding-left: 1.1rem;
-      font-size: 0.6rem;
+      font-size: 1rem;
     }
     .list li {
       margin: 0.35rem 0;
@@ -148,9 +157,13 @@
       gap: 0.4rem;
       flex-wrap: wrap;
     }
+    .lessen {
+      font-size: 0.9rem;
+    }
     .tag {
-      font-size: 0.63rem;
-      color: #0b0f0c;
+      font-size: 0.83rem;
+      font-weight: bold;
+      color: var(--bg);
       background: var(--text);
       padding: 0.2rem 0.45rem;
       border-radius: 7px;
@@ -186,13 +199,13 @@
         grid-column: span 12;
       }
       .brand {
-        font-size: 0.9rem;
+        font-size: 1.4rem;
       }
       .title {
-        font-size: 0.78rem;
+        font-size: 1rem;
       }
       .body {
-        font-size: 0.73rem;
+        font-size: 0.9rem;
       }
     }
     .title + .rule {
@@ -229,7 +242,7 @@
         <div class="body">
             3rd year Computer Science student &#40;Data Science &amp; AI&#41; at UCD with strong foundations in Java, C, and Python. 
             Experienced in software development and collaborative projects, with a strong focus on producing clean, functional code. 
-            Proven adaptability balancing part-time work with study. 
+            Proven adaptability balancing part-time work with study whilst also actively engaging in keen hobbies such as computer hardware and video games.
             Actively seeking an internship opportunity to apply technical skills, contribute to real-world projects, and further develop professional and collaborative abilities.
         </div>
         <div class="muted">Location: Newbridge, Co.Kildare | Co. Dublin</div>
@@ -238,7 +251,7 @@
         <h2 id="title-skills" class="title">Skills</h2>
         <hr class="rule">
         <div class="body">
-          <div class="muted">Languages &#40;Proficient&#41;</div>
+          <strong class="muted title">Languages &#40;Proficient&#41;</strong>
           <div class="tags">
             <span class="tag">Java</span>
             <span class="tag">C</span>
@@ -247,7 +260,7 @@
           </div>
         </div>
         <div class="body">
-          <div class="muted">Languages &#40;Familiar/Beginner&#41;</div>
+          <strong class="muted title">Languages &#40;Familiar/Beginner&#41;</strong>
           <div class="tags">
             <span class="tag">HTML</span>
             <span class="tag">CSS</span>
@@ -258,7 +271,7 @@
           </div>
         </div>
         <div class="body">
-          <div class="muted">Software/Tools</div>
+          <strong class="muted title">Software/Tools</strong>
           <div class="tags">
             <span class="tag">GitHub</span>
             <span class="tag">GitLab</span>
@@ -277,14 +290,15 @@
         <article class="body">
           <div class="heading-wrap">
             <div class="left-splash">
-              <strong class="heading">HexOust — Java Board Game</strong>
-              <span class="heading-sub">• Java, JavaFX</span>
+              <strong class="heading">Personal Website for Portfolio and Future Web Applications</strong>
+              <span class="heading-sub">• HTML, JS, CSS</span>
             </div>
-          <span class="right-splash">Jan 2025 | Apr 2025</span>
+          <span class="right-splash">Sep 2025 | Present</span>
           </div>
           <ul class="list">
-            <li>Team of 3, implemented hex-grid rendering logic, added letterboxing and scaling for adapting to varying resolutions.</li>
-            <li>Made additional visual features with JavaFX, optimized certain player conditions.</li>
+            <li>Developing a website to showcase my portfolio and for future web applications in order to better understand web development and learn web applications.</li>
+            <li>Made as a way to learn about front-end development and improve skills in HTML, CSS, and JavaScript, outside of formal education.</li>
+            <li>Interested in web design and using existing knowledge of graphic design from After Effects to tinker with interactive elements and examine varying transformations and cubic bezier curves.</li>
           </ul>
           <div class="muted"><a href="https://github.com/xulxu/HexOust-Boardgame" target="_blank" rel="noopener">Repo link</a></div>
         </article>
@@ -292,16 +306,33 @@
         <article class="body">
           <div class="heading-wrap">
             <div class="left-splash">
-              <strong class="heading">Time Complexity vs Energy Consumption</strong>
+              <strong class="heading">HexOust Board Game Implementation (4 Sprints)</strong>
+              <span class="heading-sub">• Java, JavaFX</span>
+            </div>
+          <span class="right-splash">Jan 2025 | Apr 2025</span>
+          </div>
+          <ul class="list">
+            <li>Worked in a team of 3 developing and designing an interactive Java implementation of the board game ‘HexOust’ over the course of a semester.</li>
+            <li>Responsible for implementing the logic and rendering for the board of hexagons, using mathematics, geometry and JavaFX libraries.</li>
+            <li>Optimised the rendering of the scene to preserve consistency and implemented letterboxing such that the game can scale itself whilst maintaining functionality in order to ensure operation on varying screen resolutions.</li>
+          </ul>
+          <div class="muted"><a href="https://github.com/xulxu/HexOust-Boardgame" target="_blank" rel="noopener">Repo link</a></div>
+        </article>
+        <br>
+        <article class="body">
+          <div class="heading-wrap">
+            <div class="left-splash">
+              <strong class="heading">Relationship of Time Complexity vs Energy Consumption</strong>
               <span class="heading-sub">• Java, Python</span>
             </div>
             <span class="right-splash">Jan 2025 | Apr 2025</span>
           </div>
           <ul class="list">
-            <li>Benchmarked sorting algorithms and data structures, measured time and memory, graphed results with Python.</li>
-            <li>Measured energy using software that monitors hardware sensors, analysed correlations between energy and performance.</li>
-            <li>Wrote a detailed technical report analyzing unexpected findings or proven hypotheses.</li>
-            <li>Project meant for 4 but due to circumstances, worked solo and adapted to the setback.</li>
+            <li>Implemented a benchmarking application in Java to test the performance of various sorting algorithms (Treap Sort, PQSort, Collections Sort, Quick Sort, Merge Sort, Heap Sort) and the performance of data structures (Treap, AVL Tree, TreeMap).</li>
+            <li>Designed benchmarking methods that measure execution time and memory usage for each test, along with functions that generate different types of data to evaluate best, worst, and random cases.</li>
+            <li>Developed Python scripts for parsing energy consumption data from a hardware sensor logger, as well as for parsing, handling, and graphing benchmark results to visualize the outcomes.</li>
+            <li>Produced a detailed technical report analyzing energy-performance tradeoffs, providing critical insights into unexpected results.</li>
+            <li>Adapted to working on a large project as the sole contributor, despite the project being designated for a team of 4, demonstrating resilience and exceptional endurance in the process.</li>
           </ul>
           <div class="muted"><a href="https://github.com/xulxu/group12-algorithms" target="_blank" rel="noopener">Repo link</a></div>
         </article>
@@ -309,15 +340,15 @@
         <article class="body">
           <div class="heading-wrap">
             <div class="left-splash">
-              <strong class="heading">Terminal Gantt Chart with Dependencies Implementation</strong>
+              <strong class="heading">Interactive Gantt Chart with a Dependencies Feature</strong>
               <span class="heading-sub">• C</span>
             </div>
             <span class="right-splash">Mar 2023 | Apr 2023</span>
           </div>
           <ul class="list">
-            <li>Implemented a terminal-based Gantt chart that visualizes project timelines and dependencies.</li>
-            <li>Worked alongside a teammate and communicated plans frequently on Discord.</li>
-            <li>Developed sophisticated methods of padding for visuals and dynamic layouts.</li>
+            <li>Implemented a C program that allows a user to add tasks and dependencies of said tasks into an interactive gantt chart that can be modified at will and is displayed via the terminal.</li>
+            <li>Worked alongside a teammate and was able to designate specific tasks to each other as well as establishing a common ground for communications through the platform ‘Discord’.</li>
+            <li>Designed the print method responsible for rendering the gantt chart with ASCII and developed highly sophisticated methods of padding text such that the chart will adapt to the user’s demands.</li>
           </ul>
           <div class="muted"><a href="https://github.com/xulxu/by-assignment-2" target="_blank" rel="noopener">Repo link</a></div>
           </article>
@@ -326,30 +357,56 @@
         <h2 id="title-edu" class="title">Education</h2>
         <hr class="rule">
         <div class="body">
-          <strong>University College Dublin &#40;BSc&#41;</strong><br>Computer Science with Data Science &amp; AI<br>
-          <div class="muted">2nd Year GPA: 3.53 | Sep 2022 - Present</div>
+          <strong class="heading">University College Dublin &#40;BSc&#41;</strong>
+          <div class="heading lessen">Computer Science with Data Science &amp; AI<br></div>
+          <div class="heading-wrap muted">
+            <div class="left-splash">2nd Year GPA: 3.53</div>
+            <span class="right-splash">Sep 2022 | Present</span>
+          </div>
 
-          <ul class="list">
-            <li><strong>Current Semester Modules</strong>: Data Science in Python, Information Security, Probability, Intro to AI, Intro to Economics, Astronomy &amp; Space Science</li>
-            <li><strong>&#40;2nd Year Modules&#41; &gt; A-</strong>: Software Engineering Project 2, Functional Programming 2, Object-Oriented Programming, Discrete Mathematics, Linear Algebra 2</li>
-          </ul>
+          <article class="body">
+            <strong>Current Semester Modules:<br></strong>
+            <ul class="list-condensed">
+              <li>Data Science in Python</li>
+              <li>Information Security</li>
+              <li>Probability</li>
+              <li>Intro to AI</li>
+              <li>Intro to Economics</li>
+              <li>Astronomy &amp; Space Science</li>
+            </ul>
+            <strong>2nd Year Modules &gt; A-:<br></strong>
+            <ul class="list-condensed">
+              <li>Software Engineering Project 2</li>
+              <li>Functional Programming 2</li>
+              <li>Object-Oriented Programming</li>
+              <li>Discrete Mathematics</li>
+              <li>Linear Algebra 2</li>
+            </ul>
+          </article>
         </div>
       </section>
       <section class="card span-6" aria-labelledby="title-exp">
         <h2 id="title-exp" class="title">Experience</h2>
         <hr class="rule">
         <div class="body">
-          <strong>Domino&#39;s Supply Chain Centre</strong>
-          <div class="muted">Production Assistant | Jul 2022 - Present</div>
+          <strong class="heading">Domino&#39;s Supply Chain Centre</strong>
+          <div class="heading lessen">Tougher's Industrial Estate, Newbridge, Co. Kildare<br></div>
+          <div class="heading-wrap muted">
+            <div class="left-splash">Production Assistant</div>
+            <span class="right-splash">Jul 2022 | Present</span>
+          </div>
           <ul class="list">
             <li>Collaborated in a fast-paced environment to meet targets while following safety and quality standards.</li>
             <li>Maintained accurate production logs, adapted to rotating roles, able to problem solve during very demanding days.</li>
             <li>Balanced both work and study simultaneously despite long shifts, proving adaptability and reliability.</li>
+            <li>Paid meticulous attention to detail in each assigned task as well as communicating effectively with the team supervisor.</li>
+            <li>Demonstrated strong teamwork skills by working collaboratively with team members to achieve a common goal.</li>
+            <li>Responsible for training new team members and demonstrating how to perform some tasks in a clear and concise manner.</li>
           </ul>
         </div>
       </section>
-      <section class="card span-6" aria-labelledby="title-ach">
-        <h2 id="title-ach" class="title">Interest</h2>
+      <section class="card span-6" aria-labelledby="title-interests">
+        <h2 id="title-interests" class="title">Interests &amp; Hobbies</h2>
         <hr class="rule">
         <article class="body">
           <strong>Computer Hardware</strong>
@@ -383,10 +440,21 @@
         <h2 id="title-contact" class="title">Contact</h2>
         <hr class="rule">
         <div class="body">
-          <div>Email: <br><a href="mailto:evening@outlook.ie">evening@outlook.ie</a> &#40;Work&#41;</div>
-          <div><a href="mailto:metal@outlook.ie">metal@outlook.ie</a> &#40;Personal&#41;</div><br>
-          <div>Phone: <br>0892189722 &#40;Work&#41;<br>0871209299 &#40;Personal&#41;</div><br>
-          <div>Platforms: <br><a href="https://www.linkedin.com/in/xulxu" target="_blank" rel="noopener">LinkedIn</a>
+          <div>
+            <strong>Email:</strong><br>
+            <a href="mailto:evening@outlook.ie">evening@outlook.ie</a> &#40;Work&#41;
+            <br><a href="mailto:metal@outlook.ie">metal@outlook.ie</a> &#40;Personal&#41;
+          </div>
+          <br>
+          <div>
+            <strong>Phone:</strong>
+            <br>0892189722 &#40;Work&#41;
+            <br>0871209299 &#40;Personal&#41;
+          </div>
+          <br>
+          <div>
+            <strong>Platforms:</strong><br>
+            <a href="https://www.linkedin.com/in/xulxu" target="_blank" rel="noopener">LinkedIn</a>
             <br>Discord &#40;4.x&#41;</div>
         </div>
         <div class="muted">Prefer email, linkedin &amp; text for work &amp; school.
@@ -426,11 +494,13 @@
           anim.play();
         });
 
+        //Focus (Selected)
         el.addEventListener('focus', () => {
           anim.playbackRate = 1;
           anim.play();
         });
 
+        //Blur (Unselected) Personal Reminder: Can be selected or unselected when using tab key.
         el.addEventListener('blur', () => {
           anim.playbackRate = -1;
           anim.play();
